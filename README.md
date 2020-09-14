@@ -1,46 +1,12 @@
-# fmcraft (Fogleman's Minecraft)
+# fmcraft (Fogleman's Craft)
 
-Simple Minecraft-inspired demo written in Python and Pyglet.
-
-http://www.youtube.com/watch?v=kC3lwK631X8
-
-**Like this project?**
-
-You might also like my other Minecraft clone written in C using modern OpenGL (GL shader language). It performs better, has better terrain generation and saves state to a sqlite database. See here:
-
-https://github.com/fogleman/Craft
-
-## Goals and Vision
-
-I would like to see this project turn into an educational tool. Kids love Minecraft and Python is a great first language.
-This is a good opportunity to get children excited about programming.
-
-The code should become well commented and more easily configurable. It should be easy to make some simple changes
-and see the results quickly.
-
-I think it would be great to turn the project into more of a library / API... a Python package that you import and then
-use / configure to setup a world and run it. Something along these lines...
-
-
-```python
-import mc
-
-world = mc.World(...)
-world.set_block(x, y, z, mc.DIRT)
-mc.run(world)
-```
-
-The API could contain functionality for the following:
-
-- Easily configurable parameters like gravity, jump velocity, walking speed, etc.
-- Hooks for terrain generation.
+Originally a Simple Minecraft-inspired demo written in Python and Pyglet created by Michael Fogleman, now a sandbox for computer science research in Dr. Trevor Tomesh's lab! 
 
 ## How to Run
-
 ```shell
 pip install pyglet
-git clone https://github.com/fogleman/Minecraft.git
-cd Minecraft
+git clone https://github.com/trevortomesh/fmcraft.git
+cd fmcraft
 python main.py
 ```
 
@@ -104,3 +70,7 @@ See the [wiki](https://github.com/fogleman/Minecraft/wiki) for this project to i
 ### Quitting
 
 - ESC: release mouse, then close window
+
+## Todo
+
+- Loading and saving function with plaintext database.
