@@ -11,6 +11,8 @@ from pyglet.gl import *
 from pyglet.graphics import TextureGroup
 from pyglet.window import key, mouse
 
+TERRAGEN = False
+
 TICKS_PER_SEC = 60
 
 # Size of sectors used to ease block loading.
@@ -172,25 +174,26 @@ class Model(object):
                     for dy in xrange(-2, 3):
                         self.add_block((x, y + dy, z), STONE, immediate=False)
 
-        # generate the hills randomly
-        o = n - 10
-        for _ in xrange(120):
-            a = random.randint(-o, o)  # x position of the hill
-            b = random.randint(-o, o)  # z position of the hill
-            c = -1  # base of the hill
-            h = random.randint(1, 6)  # height of the hill
-            s = random.randint(4, 8)  # 2 * s is the side length of the hill
-            d = 1  # how quickly to taper off the hills
-            t = random.choice([GRASS, SAND, BRICK])
-            for y in xrange(c, c + h):
-                for x in xrange(a - s, a + s + 1):
-                    for z in xrange(b - s, b + s + 1):
-                        if (x - a) ** 2 + (z - b) ** 2 > (s + 1) ** 2:
-                            continue
-                        if (x - 0) ** 2 + (z - 0) ** 2 < 5 ** 2:
-                            continue
-                        self.add_block((x, y, z), t, immediate=False)
-                s -= d  # decrement side lenth so hills taper off
+        # generate the hills randomly if TERRAGEN is on
+        if TERRAGEN is True:
+            o = n - 10
+            for _ in xrange(120):
+                a = random.randint(-o, o)  # x position of the hill
+                b = random.randint(-o, o)  # z position of the hill
+                c = -1  # base of the hill
+                h = random.randint(1, 6)  # height of the hill
+                s = random.randint(4, 8)  # 2 * s is the side length of the hill
+                d = 1  # how quickly to taper off the hills
+                t = random.choice([GRASS, SAND, BRICK])
+                for y in xrange(c, c + h):
+                    for x in xrange(a - s, a + s + 1):
+                        for z in xrange(b - s, b + s + 1):
+                            if (x - a) ** 2 + (z - b) ** 2 > (s + 1) ** 2:
+                                continue
+                            if (x - 0) ** 2 + (z - 0) ** 2 < 5 ** 2:
+                                continue
+                            self.add_block((x, y, z), t, immediate=False)
+                    s -= d  # decrement side lenth so hills taper off
 
     def hit_test(self, position, vector, max_distance=8):
         """ Line of sight search from current position. If a block is
@@ -419,8 +422,8 @@ class Model(object):
         add_block() or remove_block() was called with immediate=False
 
         """
-        start = time.clock()
-        while self.queue and time.clock() - start < 1.0 / TICKS_PER_SEC:
+        start = time.process_time()
+        while self.queue and time.process_time() - start < 1.0 / TICKS_PER_SEC:
             self._dequeue()
 
     def process_entire_queue(self):
